@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title> Kanban Board | Delete List</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <a href="/">Home</a>
+    <h1 class="delete">Are you sure to delete this list and it tasks ?</h1>
+    <a  href="/{{ username }}/{{ list }}/deletelist/yes"><button class="delete-yes" >Yes</button></a><a  href="/"><button class="delete-yes">No</button></a>
+    <h1 class="list-heading" style="text-align: center;">List name:{{ list }}</h1>
+    {% for Tasks in tasks %}
+    {% if Tasks.completed == 'true'%}
+                <div class='cards' id="done">
+                    <h3>{{ Tasks.title }}</h3>
+                    <p>{{ Tasks.task}}</p>
+                    <div class="dues">
+                        <p>Done</p>  
+                        <p> Due: {{ Tasks.due_date }}</p>
+                    </div>
+                </div>
+                        {% else %}
+                        <div class='cards'>
+                            <h3>{{ Tasks.title }}</h3>
+                            <p>{{ Tasks.task}}</p>
+                            <div class="dues">
+                                <p>Pending</p>  
+                                <p> Due: {{ Tasks.due_date }}</p>
+                            </div>
+                        </div>
+                        
+                        {% endif %}
+                        
+
+                {% endfor %}
+</body>
+
+</html>

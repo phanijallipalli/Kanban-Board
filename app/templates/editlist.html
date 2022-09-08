@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title> Kanban Board | Edit List</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <a href="/">Home</a>
+        <div class="form">
+            {% for message in get_flashed_messages() %}
+            <div class=flash>{{ message }}</div>
+            {% endfor %}
+            <h1>Add List name</h1>
+            <form action="/{{ data }}/{{ list_name.list_name }}/editlist" method = 'POST' class = 'login-form'>
+                <input type="hidden" name = 'user' value =  '{{ data }}' />
+                <input type="hidden" name = 'id' value =  '{{ list_name.id }}' />
+                <input type="text" name = 'listname' required placeholder="Listname" value="{{ list_name.list_name }}"/>
+                <button>Add list</button>
+                
+            </form>
+        </div>
+    </body>
+
+</html>

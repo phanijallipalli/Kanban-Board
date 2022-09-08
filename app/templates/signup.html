@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF=8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+        <title>Kanban Board | Signup</title>
+    </head>
+    <body>
+        <div class="form">
+            {% for message in get_flashed_messages() %}
+            <div class=flash>{{ message }}</div>
+            {% endfor %}
+        <h1>Sign up</h1> 
+            <form action="/signup" method="POST" class = 'signup-form'>
+                <input type= 'text' name = 'username' required placeholder="Username" />
+                <input type = 'password' name = 'password' required placeholder="Password" /><i></i>
+                <button>Signup</button>
+                <p>Already has an Account ? <a href="{{ url_for('login') }}">Login</a></p>
+            </form>
+        </div>
+    </body>
+</html>

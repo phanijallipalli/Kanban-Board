@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title> Kanban Board | Edit Task</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <a href="/">Home</a>
+    <div class="form">
+        <h1>Edit Task </h1>
+        <form action="/{{ task.username }}/{{ task.id }}/edit" method='POST' class='Add-Task'>
+            <input type="hidden" name='id' value='{{ task.id }}' />
+            <input type="hidden" name='user' value='{{ data }}' />
+            <input type="text" name='Task-title' required placeholder="Task-title"  value="{{ task.title }}"/>
+            <textarea name='Task-description' required placeholder="description"> {{ task.task }} </textarea>
+            <label for="due">Due Date</label>
+            <input type="date" id='due' name = 'Due' required placeholder="Due date" value="{{ task.due_date }}"/>
+            <div>
+                <label for="list">Status: </label>
+                <select required name="status" id="list" >
+                    <option value="{{ list_name }}" selected hidden>{{ list_name }}</option>
+                    {% for list in lists %}
+                    <option value="{{ list.list_name }}">{{ list.list_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <label for="checkbox">Mark as Completed</label>
+
+            {% if task.completed == 'true' %}
+            <input type="checkbox" id="checkbox" name="completed" value="true" checked/>
+            {% else %}
+            <input type="checkbox" id="checkbox" name="completed" value="true" />
+            {% endif %}
+            <input type="hidden"  name="completed" value="false"/>
+            <button>Add task</button>
+
+        </form>
+    </div>
+</body>
+
+</html>

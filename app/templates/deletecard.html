@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title> Kanban Board | Delete Task</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <a href="/">Home</a>
+    {% if Tasks.completed == 'true'%}
+                <div class='cards' id="done">
+                    <h3>List : {{ list.list_name }}</h3>
+                    <h3>{{ Tasks.title }}</h3>
+                    <p>{{ Tasks.task}}</p>
+                    <div class="dues">
+                        <p>Done</p>  
+                        <p> Due: {{ Tasks.due_date }}</p>
+                    </div>
+                </div>
+                <h1 class="delete">Are you sure to delete this card</h1>
+                <a  href="/{{ username }}/{{ Tasks.id }}/delete/yes"><button class="delete-yes" >Yes</button></a><a  href="/"><button class="delete-yes">No</button></a>
+                        {% else %}
+                        <div class='cards'>
+                            <h3>List : {{ list.list_name }}</h3>
+                            <h3>{{ Tasks.title }}</h3>
+                            <p>{{ Tasks.task}}</p>
+                            <div class="dues">
+                                <p>Pending</p>  
+                                <p> Due: {{ Tasks.due_date }}</p>
+                            </div>
+                        </div>
+                        <h1 class="delete">Are you sure to delete this card</h1>
+                        <a  href="/{{ username }}/{{ Tasks.id }}/delete/yes"><button class="delete-yes" >Yes</button></a><a  href="/"><button class="delete-yes">No</button></a>
+                        {% endif %}
+</body>
+</html>

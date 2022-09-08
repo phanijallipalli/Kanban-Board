@@ -1,0 +1,463 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: kanban-board
+  description: api for kanban board
+servers:
+  - url: http://127.0.0.1:5000/
+paths: 
+  /api/signup:
+    post:
+      description: to sign up
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: username
+                password:
+                  type: string
+                  example: 12345678
+      responses:
+        '200':
+          description: Successfully Created
+        '409':
+          description: username already exist
+        '500':
+          description: Internal Server Error
+        '404':
+          description: page not found
+  /api/{username}:
+    get:
+      description: URL to get all the lists and cards of the user
+      parameters:
+        - in: path
+          name: username
+          required : true
+          schema:
+            type: string
+        - in: query
+          name: password
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                 properties:
+                  listname:
+                    type: string
+                    example: to-do
+                  list-id:
+                    type: number
+                    example: 21
+                  task-id:
+                    type: number
+                    example: 1
+                  task-title:
+                    type: string
+                    example: task-title
+                  task-description:
+                    type: string
+                    example: task-description
+                  due-date:
+                    type: string
+                    example: 15-08-2022
+                  status:
+                    type: string
+                    example: pending
+                  date-of-completion:
+                    type: string
+                    example: 15-08-2022
+        '409':
+          description: password incorrect
+        '500':
+          description: Internal Server Error
+        '404':
+          description: user not found
+  /api/{username}/lists:
+    get:
+      description: to get all the listnames of the user
+      parameters:
+        - in: path
+          name: username
+          required : true
+          schema:
+            type: string
+        - in: query
+          name: password
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                 properties:
+                  listname:
+                    type: string
+                    example: to-do
+                  list-id:
+                    type: number
+                    example: 21
+        '500':
+          description: Internal Server Error
+        '404':
+          description: page not found
+        '406':
+          description: list name already exists
+  /api/{username}/addlist:
+    post:
+      description: to add a list
+      parameters:
+        - in: path
+          name: username
+          required : true
+          schema:
+            type: string
+        - in: query
+          name: password
+          schema:
+            type: string
+      requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  addlist:
+                    type: string
+                    example: to-do
+      responses:
+        '200':
+          description: Successfully list Created
+        '409':
+          description: List already exist
+        '500':
+          description: Internal Server Error
+        '404':
+          description: page not found
+        '406':
+          description: list name already exists
+  /api/{username}/addtask:
+    post:
+      description: to add a task
+      parameters:
+        - in: path
+          name: username
+          required : true
+          schema:
+            type: string
+        - in: query
+          name: password
+          schema:
+            type: string
+      requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  list_id:
+                    type: string
+                    example: 1
+                  task_title:
+                    type: string
+                    example: task-title
+                  task_description:
+                    type: string
+                    example: task-description
+                  due_date:
+                    type: string
+                    example: 12-08-2022
+                  mark_as_completed:
+                    type: string
+                    example: <yes/no>
+                  
+      responses:
+        '200':
+          description: Successfully task added
+        '500':
+          description: Internal Server Error
+        '404':
+          description: page not found
+        '410':
+          description: list not found
+        '409':
+          description: password incorrect
+  /api/{username}/{list_id}:
+    get:
+      description: URL to get all the cards of the list of user
+      parameters:
+        - in: path
+          name: username
+          required : true
+          schema:
+            type: string
+        - in: query
+          name: password
+          schema:
+            type: string
+        - in: path
+          name: list_id
+          required : true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                 properties:
+                  listname:
+                    type: string
+                    example: to-do
+                  list-id:
+                    type: string
+                    example: 21
+                  task-id:
+                    type: string
+                    example: 1
+                  task-title:
+                    type: string
+                    example: task-title
+                  task-description:
+                    type: string
+                    example: task-description
+                  due-date:
+                    type: string
+                    example: 15-08-2022
+                  status:
+                    type: string
+                    example: pending
+                  date-of-completion:
+                    type: string
+                    example: 15-08-2022
+        '409':
+          description: password incorrect
+        '500':
+          description: Internal Server Error
+        '404':
+          description: page not found
+        '405':
+          description: list not found
+    put:
+      description: URL to get all the cards of the list of user
+      parameters:
+          - in: path
+            name: username
+            required : true
+            schema:
+              type: string
+          - in: query
+            name: password
+            schema:
+              type: string
+          - in: path
+            name: list_id
+            required : true
+            schema:
+              type: number
+      requestBody:
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    list_name:
+                      type: string
+                      example: to-do
+      responses:
+        '200':
+          description: listname updated sucess
+        '409':
+          description: password incorrect
+        '500':
+          description: Internal Server Error
+        '404':
+          description: page not found
+        '405':
+          description: list not found 
+        '406':
+          description: list name already exists
+    delete:
+      description: URL to delete all the cards of the list of user
+      parameters:
+          - in: path
+            name: username
+            required : true
+            schema:
+              type: string
+          - in: query
+            name: password
+            schema:
+              type: string
+          - in: path
+            name: list_id
+            required: true
+            schema:
+              type: number
+      responses:
+        '200':
+          description: listname updated sucess
+        '409':
+          description: password incorrect
+        '500':
+          description: Internal Server Error
+        '404':
+          description: page not found
+        '405':
+          description: list not found 
+  /api/{username}/task/{task_id}: 
+    get:
+      description: URL to get all the cards of the list of user
+      parameters:
+        - in: path
+          name: username
+          required : true
+          schema:
+            type: string
+        - in: query
+          name: password
+          schema:
+            type: string
+        - in: path
+          name: task_id
+          required : true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: course object
+                type: object
+                properties:
+                  listname:
+                    type: string
+                    example: to-do
+                  list_id:
+                    type: string
+                    example: 21
+                  task_id:
+                    type: string
+                    example: 1
+                  task_title:
+                    type: string
+                    example: task-title
+                  task_description:
+                    type: string
+                    example: task-description
+                  due_date:
+                    type: string
+                    example: 15-08-2022
+                  status:
+                    type: string
+                    example: pending
+                  date_of_completion:
+                    type: string
+                    example: 15-08-2022
+        '409':
+          description: password incorrect
+        '500':
+          description: Internal Server Error
+        '404':
+          description: page not found
+        '405':
+          description: task not found
+    put:
+      description: URL to get all the cards of the list of user
+      parameters:
+          - in: path
+            name: username
+            required : true
+            schema:
+              type: string
+          - in: query
+            name: password
+            schema:
+              type: string
+          - in: path
+            required : true
+            name: task_id
+            schema:
+              type: number
+      requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  list_id:
+                    type: string
+                    example: 21
+                  task_title:
+                    type: string
+                    example: task-title
+                  task_description:
+                    type: string
+                    example: task_description
+                  due_date:
+                    type: string
+                    example: 15-08-2022
+                  mark_as_completed:
+                    type: string
+                    example: <yes/no>
+      responses:
+        '200':
+          description: listname updated sucess
+        '409':
+          description: password incorrect
+        '500':
+          description: Internal Server Error
+        '404':
+          description: page not found
+        '405':
+          description: task not found 
+        '406':
+          description: task name already exists
+    delete:
+      description: URL to delete all the cards of the list of user
+      parameters:
+          - in: path
+            name: username
+            required : true
+            schema:
+              type: string
+          - in: query
+            name: password
+            schema:
+              type: string
+          - in: path
+            name: task_id
+            required: true
+            schema:
+              type: number
+      responses:
+        '200':
+          description: task deleted sucess
+        '409':
+          description: password incorrect
+        '500':
+          description: Internal Server Error
+        '404':
+          description: page not found
+        '405':
+          description: task not found 
+        '406':
+          description: list name already exists

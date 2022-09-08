@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF=8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+        <title>Kanban Board | Summary</title>
+    </head>
+    <body>
+        <a href="/">Home</a>
+        <h1>Summary</h1>
+        <div class = 'Summary-div'>
+        <h3>
+                Total Tasks
+        </h3>
+        <img src = "{{ url_for('static', filename='deadline.jpg') }}" >
+        <img src = "{{ url_for('static', filename='percentagecompleted.jpg') }}" >
+        </div>
+        {% for dat in data.keys() %}
+        <div class = 'Summary-div'>
+        <h3>Number of tasks in {{ dat }} is  {{ data[dat] }}</h3>
+        <img src = "{{ url_for('static', filename = dat + '.jpg') }}">
+        <img src = "{{ url_for('static', filename = dat + 'done.jpg') }}">
+        </div>
+        {% endfor %}
+        <div class = 'Summary-div'>
+        <h3>Due Date vs Tasks</h3>
+        <img src = "{{ url_for('static', filename='graph.jpg') }}">
+        <img src = "{{ url_for('static', filename='graph-pie.jpg') }}">
+        </div>
+    </body>
+</html>
