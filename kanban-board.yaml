@@ -5,6 +5,7 @@ info:
   description: api for kanban board
 servers:
   - url: http://127.0.0.1:5000/
+  - url: https://Kanban-board-1.jallipalli-phan.repl.co
 paths: 
   /api/signup:
     post:
